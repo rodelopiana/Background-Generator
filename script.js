@@ -1,53 +1,36 @@
-var button = document.getElementById("enter");
-var input = document.getElementById("userinput");
-var ul = document.querySelector("ul");
-var items = ul.getElementsByTagName("li");
-var del = ul.getElementsByTagName("button");
+var css = document.querySelector("h3");
+var color1 = document.querySelector(".color1");
+var color2 = document.querySelector(".color2");
+var body = document.getElementById("gradient");
+var btn = body.querySelector("button");
 
-function inputLength() {
-	return input.value.length;
+function setGradient() {
+	body.style.background = 
+	"linear-gradient(to right, " 
+	+ color1.value 
+	+ ", " 
+	+ color2.value 
+	+ ")";
+	css.textContent = body.style.background + ";";
 }
 
-function createListElement() {
-	var li = document.createElement("li");
-	li.appendChild(document.createTextNode(input.value));
-	var btn = li.appendChild(document.createElement("button"));
-
-	ul.appendChild(li);
-
-	li.addEventListener("click",markDone);
-	btn.addEventListener("click",deleteItem);
-	btn.innerHTML = "x";
-	input.value = "";
+function setRandomGradient() {
+	var rcolor1 = Math.floor(Math.random()*16777215).toString(16);
+	var rcolor2 = Math.floor(Math.random()*16777215).toString(16);
+	color1.value = "#" + rcolor1;
+	color2.value = "#" + rcolor2;
+	body.style.background = 
+	"linear-gradient(to right, " 
+	+ color1.value
+	+ ", " 
+	+ color2.value
+	+ ")";
+	css.textContent = body.style.background + ";";
 }
 
-function addListAfterClick() {
-	if (inputLength() > 0) {
-		createListElement();
-	}
-}
 
-function addListAfterKeypress(event) {
-	if (inputLength() > 0 && event.keyCode === 13) {
-		createListElement();
-	}
-}
+color1.addEventListener("input", setGradient);
 
-function markDone(e){
-	e.target.classList.toggle("done");
-}
+color2.addEventListener("input", setGradient);
 
-function deleteItem(e){
-	e.target.parentNode.remove();
-}
-
-button.addEventListener("click", addListAfterClick);
-
-input.addEventListener("keypress", addListAfterKeypress);
-
-for(var i = 0; i < items.length; i++){
-	items[i].addEventListener("click",markDone);
-	items[i].appendChild(document.createElement("button"));
-	del[i].addEventListener("click",deleteItem);
-	del[i].innerHTML = "x";
-}
+btn.addEventListener("click",setRandomGradient);
